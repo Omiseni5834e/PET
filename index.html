@@ -87,14 +87,36 @@
       margin-top: 50px;
       display: none; /* Hidden until form is submitted */
     }
-    .pet-title {
-      font-size: 40px;
-      background: linear-gradient(90deg, #ff69b4, #ff1493, #ff69b4);
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: glowText 2s infinite;
-      margin-bottom: 20px;
-    }
+    /* Pet Title */
+.pet-title {
+  font-size: 40px;
+  font-family: 'Pacifico', cursive; /* Stylish font */
+  text-align: center;
+  margin-bottom: 20px;
+  animation: glowText 2s infinite;
+}
+
+/* Gradient Text */
+#pet-name-display {
+  background: linear-gradient(90deg, #ff69b4, #ff1493, #ff69b4);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* Text shadow */
+}
+
+/* Glow Animation */
+@keyframes glowText {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
     @keyframes glowText {
       0% {
         background-position: 0% 50%;
@@ -107,52 +129,173 @@
       }
     }
     .penguin {
-      width: 150px;
-      height: 200px;
-      position: relative;
-      background: black;
-      border-radius: 50% 50% 40% 40%;
-      margin: auto;
-      cursor: pointer;
-      transition: transform 0.1s;
-    }
-    .penguin:hover {
-      transform: scale(1.05);
-    }
-    .penguin-belly {
-      width: 80px;
-      height: 120px;
-      background: white;
-      border-radius: 50%;
-      position: absolute;
-      top: 40px;
-      left: 50%;
-      transform: translateX(-50%);
-    }
-    .penguin-eye {
-      width: 15px;
-      height: 15px;
-      background: white;
-      border-radius: 50%;
-      position: absolute;
-      top: 30px;
-    }
-    .eye-left {
-      left: 40px;
-    }
-    .eye-right {
-      right: 40px;
-    }
-    .penguin-beak {
-      width: 20px;
-      height: 15px;
-      background: orange;
-      position: absolute;
-      top: 50px;
-      left: 50%;
-      transform: translateX(-50%);
-      border-radius: 50%;
-    }
+  width: 100px;
+  height: 120px;
+  position: relative;
+  background: #333;
+  border-radius: 50% 50% 45% 45%;
+  margin: auto;
+  cursor: pointer;
+  transition: transform 0.1s;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  animation: wobble 2s infinite ease-in-out; /* Wobble animation */
+}
+
+.penguin:hover {
+  transform: scale(1.05);
+}
+
+.penguin-belly {
+  width: 60px;
+  height: 80px;
+  background: #fff;
+  border-radius: 50%;
+  position: absolute;
+  top: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.penguin-eye {
+  width: 10px;
+  height: 10px;
+  background: white;
+  border-radius: 50%;
+  position: absolute;
+  top: 20px;
+}
+
+.eye-left {
+  left: 30px;
+}
+
+.eye-right {
+  right: 30px;
+}
+
+.penguin-beak {
+  width: 15px;
+  height: 10px;
+  background: #ffa500;
+  position: absolute;
+  top: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.penguin::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  bottom: -10px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.3), transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+@keyframes wobble {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}/* Level 5 Penguin Design */
+.mature-penguin {
+  width: 120px;
+  height: 180px;
+  background: linear-gradient(45deg, #000 40%, #333 60%);
+  border-radius: 50% 50% 40% 40%;
+  position: relative;
+  margin: auto;
+  cursor: pointer;
+  transition: transform 0.1s;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.mature-penguin .penguin-belly {
+  width: 70px;
+  height: 100px;
+  background: #fff;
+  border-radius: 50% 50% 40% 40%;
+  position: absolute;
+  top: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.mature-penguin .penguin-eye {
+  width: 8px;
+  height: 8px;
+  background: white;
+  border-radius: 50%;
+  position: absolute;
+  top: 25px;
+}
+
+.mature-penguin .eye-left {
+  left: 35px;
+}
+
+.mature-penguin .eye-right {
+  right: 35px;
+}
+
+.mature-penguin .penguin-beak {
+  width: 20px;
+  height: 10px;
+  background: #ff8c00;
+  position: absolute;
+  top: 45px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 50% 50% 40% 40%;
+  clip-path: polygon(0% 0%, 100% 0%, 50% 100%);
+}
+
+.mature-penguin .flipper {
+  width: 30px;
+  height: 60px;
+  background: #333;
+  border-radius: 50%;
+  position: absolute;
+  top: 60px;
+}
+
+.mature-penguin .flipper-left {
+  left: -20px;
+  transform: rotate(-30deg);
+}
+
+.mature-penguin .flipper-right {
+  right: -20px;
+  transform: rotate(30deg);
+}
+
+.mature-penguin .foot {
+  width: 20px;
+  height: 10px;
+  background: #ff8c00;
+  border-radius: 50%;
+  position: absolute;
+  bottom: -5px;
+}
+
+.mature-penguin .foot-left {
+  left: 35px;
+  transform: rotate(-20deg);
+}
+
+.mature-penguin .foot-right {
+  right: 35px;
+  transform: rotate(20deg);
+}
     .bar-container {
       width: 250px;
       height: 25px;
@@ -262,6 +405,90 @@
       top: 0;
       left: 10px;
     }
+    /* Stylish Button */
+#mini-game-button {
+  padding: 15px 30px;
+  font-size: 18px;
+  background: linear-gradient(135deg, #ff69b4, #ff1493);
+  color: white;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+#mini-game-button:hover {
+  background: linear-gradient(135deg, #ff1493, #ff69b4);
+  transform: scale(1.1);
+}
+
+/* Fish Container */
+.falling-fish {
+  position: absolute;
+  width: 60px; /* Fish width */
+  height: 30px; /* Fish height */
+  cursor: pointer;
+  animation: fall 5s linear infinite, swim 1s ease-in-out infinite;
+}
+
+/* Fish Body */
+.falling-fish .body {
+  width: 100%;
+  height: 100%;
+  background: #ff8c00; /* Orange body */
+  border-radius: 50% 50% 50% 50%; /* Oval shape */
+  position: relative;
+}
+
+/* Fish Tail */
+.falling-fish .tail {
+  width: 0;
+  height: 0;
+  border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
+  border-bottom: 20px solid #ff8c00; /* Tail color */
+  position: absolute;
+  top: 5px;
+  left: -20px;
+  transform: rotate(-45deg);
+}
+
+/* Fish Fin */
+.falling-fish .fin {
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 12px solid #ff8c00; /* Fin color */
+  position: absolute;
+  top: 15px;
+  right: -10px;
+  transform: rotate(45deg);
+}
+
+/* Fish Eye */
+.falling-fish .eye {
+  width: 6px;
+  height: 6px;
+  background: white; /* White eye */
+  border-radius: 50%;
+  position: absolute;
+  top: 10px;
+  left: 15px;
+}
+
+/* Falling Animation */
+@keyframes fall {
+  0% { top: -50px; }
+  100% { top: 300px; }
+}
+
+/* Swimming Animation */
+@keyframes swim {
+  0%, 100% { transform: rotate(-5deg); }
+  50% { transform: rotate(5deg); }
+}
     .love-message {
       position: absolute;
       color: pink;
@@ -310,7 +537,59 @@
         text-shadow: 0 0 5px #ff69b4, 0 0 10px #ff69b4, 0 0 20px #ff69b4;
       }
     }
-    /* Message styling for notifications */
+    /* Speech Bubble */
+.speech-bubble {
+  position: absolute;
+  background: linear-gradient(135deg, #ff69b4, #ff1493); /* Gradient background */
+  color: white; /* White text */
+  padding: 12px 20px;
+  border-radius: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Shadow for depth */
+  font-size: 16px;
+  font-family: 'Comic Sans MS', cursive, sans-serif; /* Fun font */
+  text-align: center;
+  white-space: nowrap;
+  animation: floatUp 2s ease-out forwards, fadeIn 0.5s ease-out;
+  transform: translateY(0);
+  opacity: 1; /* Ensure the bubble is visible initially */
+  pointer-events: none; /* Prevent the bubble from blocking clicks */
+}
+
+/* Speech Bubble Arrow */
+.speech-bubble::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 10px solid #ff69b4; /* Match bubble gradient */
+}
+
+/* Float Up Animation */
+@keyframes floatUp {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+}
+
+/* Fade In Animation */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
     .message {
       position: fixed;
       bottom: 20px;
@@ -330,6 +609,7 @@
       opacity: 1;
     }
   </style>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
 </head>
 <body>
   <div class="overlay" id="overlay">
@@ -340,7 +620,8 @@
     </div>
   </div>
   <div class="container" id="container">
-    <h1 class="pet-title" id="pet-title">AAPKA NEW PET</h1>
+    <h1 class="pet-title" id="pet-title"><span id="pet-name-display">AAPKA NEW PET</span></h1>
+    <div id="pet-messages" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;"></div>
     <div id="penguin" onclick="petPenguin()" ondrop="drop(event)" ondragover="allowDrop(event)">
       <div class="penguin">
         <div class="penguin-belly"></div>
@@ -370,6 +651,11 @@
       <button onclick="buyFood('🍣', 30, 15)">Buy Sushi ($30)</button>
       <button onclick="buyFood('🍩', 40, 20)">Buy Donut ($40)</button>
     </div>
+    <button id="mini-game-button" onclick="startMiniGame()">Play Mini-Game</button>
+<div id="mini-game" style="display: none; position: relative; width: 100%; height: 300px; border: 2px solid #000; overflow: hidden;">
+  <div id="mini-game-timer" style="position: relative; top: 10px; right: 10px; font-size: 20px; color: #000;">Time: 10</div>
+  <div id="mini-game-score" style="position: relative; top: 10px; left: 10px; font-size: 20px; color: #000;">Score: 0</div>
+</div>
     <div class="inventory" id="inventory"></div>
   </div>
   <!-- Message element for notifications -->
@@ -395,14 +681,14 @@
     }
 
     function submitName() {
-      const nameInput = document.getElementById("pet-name");
-      petName = nameInput.value.trim() || "AAPKA NEW PET"; // Default name if empty
-      document.getElementById("pet-title").textContent = petName;
-      document.title = `Virtual Pet - ${petName}`; // Update page title
-      document.getElementById("overlay").style.display = "none"; // Hide the form
-      document.getElementById("container").style.display = "block"; // Show the main content
-      startHungerDepletion();
-    }
+  const nameInput = document.getElementById("pet-name");
+  const petName = nameInput.value.trim() || "AAPKA NEW PET"; // Default name if empty
+  document.getElementById("pet-name-display").textContent = petName; // Update the styled name
+  document.title = `Virtual Pet - ${petName}`; // Update page title
+  document.getElementById("overlay").style.display = "none"; // Hide the form
+  document.getElementById("container").style.display = "block"; // Show the main content
+  startHungerDepletion();
+}
 
     function checkLevelUp() {
       if (attraction >= levelUpThreshold()) {
@@ -533,6 +819,177 @@
         updateStats();
       }, 1000); // Decrease hunger by 1 every second
     }
+    function checkLevelUp() {
+  if (attraction >= levelUpThreshold()) {
+    attraction = 0;
+    level++;
+    if (level !== 5) {
+      createLoveMessage();
+    } else {
+      createSpecialMessage();
+      transformToMaturePenguin(); // Transform the penguin
+    }
+    updateStats();
+  }
+}
+
+function transformToMaturePenguin() {
+  const penguinContainer = document.getElementById("penguin");
+  penguinContainer.innerHTML = `
+    <div class="mature-penguin">
+      <div class="penguin-belly"></div>
+      <div class="penguin-eye eye-left"></div>
+      <div class="penguin-eye eye-right"></div>
+      <div class="penguin-beak"></div>
+      <div class="flipper flipper-left"></div>
+      <div class="flipper flipper-right"></div>
+      <div class="foot foot-left"></div>
+      <div class="foot foot-right"></div>
+    </div>
+  `;
+}
+let miniGameScore = 0;
+let miniGameInterval;
+let fishInterval;
+let timeLeft = 10;
+
+function startMiniGame() {
+  // Reset game state
+  miniGameScore = 0;
+  timeLeft = 10;
+  document.getElementById("mini-game-score").textContent = "Score: 0";
+  document.getElementById("mini-game-timer").textContent = "Time: 10";
+
+  // Hide the button and show the mini-game container
+  document.getElementById("mini-game-button").style.display = "none";
+  document.getElementById("mini-game").style.display = "block";
+
+  // Start creating falling fish
+  fishInterval = setInterval(createFallingFish, 1000); // Create a new fish every second
+
+  // Start the timer
+  miniGameInterval = setInterval(updateTimer, 1000);
+
+  // End the mini-game after 10 seconds
+  setTimeout(endMiniGame, 10000);
+}
+
+function createFallingFish() {
+  const miniGameContainer = document.getElementById("mini-game");
+  const fish = document.createElement("div");
+  fish.classList.add("falling-fish");
+
+  // Create fish body
+  const body = document.createElement("div");
+  body.classList.add("body");
+
+  // Create fish tail
+  const tail = document.createElement("div");
+  tail.classList.add("tail");
+
+  // Create fish fin
+  const fin = document.createElement("div");
+  fin.classList.add("fin");
+
+  // Create fish eye
+  const eye = document.createElement("div");
+  eye.classList.add("eye");
+
+  // Assemble the fish
+  body.appendChild(tail);
+  body.appendChild(fin);
+  body.appendChild(eye);
+  fish.appendChild(body);
+
+  // Position the fish
+  fish.style.left = `${Math.random() * 90}%`; // Random horizontal position
+
+  // Add click event to the fish
+  fish.onclick = () => {
+    miniGameScore++;
+    document.getElementById("mini-game-score").textContent = `Score: ${miniGameScore}`;
+    fish.remove();
+  };
+
+  // Add fish to the mini-game container
+  miniGameContainer.appendChild(fish);
+
+  // Remove fish after 5 seconds
+  setTimeout(() => fish.remove(), 5000);
+}
+
+function updateTimer() {
+  timeLeft--;
+  document.getElementById("mini-game-timer").textContent = `Time: ${timeLeft}`;
+}
+
+function endMiniGame() {
+  clearInterval(miniGameInterval); // Stop the timer
+  clearInterval(fishInterval); // Stop creating fish
+  document.getElementById("mini-game").style.display = "none"; // Hide the mini-game
+  document.getElementById("mini-game-button").style.display = "block"; // Show the button again
+
+  // Add the mini-game score to the penguin's attraction
+  attraction += miniGameScore;
+  updateStats();
+  showMessage(`You earned ${miniGameScore} attraction points!`);
+}
+const messages = [
+  "Did I tell you I love you!",
+  "Feed me, please!",
+  "I'm so happy!",
+  "Let's play!",
+  "You're the best!",
+  "I need a hug!",
+  "What's for dinner?",
+  "I'm feeling sleepy...",
+  "Let's go on an adventure!",
+  "You're my favorite!",
+];
+
+function getCurrentPenguin() {
+  // Check if the mature penguin exists
+  const maturePenguin = document.querySelector(".mature-penguin");
+  if (maturePenguin) {
+    return maturePenguin;
+  }
+  // Otherwise, return the baby penguin
+  return document.querySelector(".penguin");
+}
+
+function showRandomMessage() {
+  const messageContainer = document.getElementById("pet-messages");
+  const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+
+  // Create speech bubble
+  const bubble = document.createElement("div");
+  bubble.classList.add("speech-bubble");
+  bubble.textContent = randomMessage;
+
+  // Get the current penguin (baby or mature)
+  const penguin = getCurrentPenguin();
+  if (!penguin) {
+    console.warn("Penguin element not found!");
+    return;
+  }
+
+  // Position the bubble near the penguin
+  const penguinRect = penguin.getBoundingClientRect();
+  const containerRect = messageContainer.getBoundingClientRect();
+
+  // Calculate the position relative to the penguin
+  bubble.style.top = `${penguinRect.top - containerRect.top - 50}px`;
+  bubble.style.left = `${penguinRect.left - containerRect.left + penguinRect.width / 2 - 50}px`;
+
+  // Add bubble to the container
+  messageContainer.appendChild(bubble);
+
+  // Remove bubble after animation
+  setTimeout(() => bubble.remove(), 2000);
+}
+
+// Show a random message every 5 seconds
+setInterval(showRandomMessage, 5000);
   </script>
 </body>
 </html>

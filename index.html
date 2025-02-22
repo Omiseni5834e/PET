@@ -3,17 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Virtual Pet - Monarch Penguin</title>
+    <title>Virtual Pet - Name Your Pet</title>
     <style>
         body {
             text-align: center;
             background-color: #ffefd5;
             font-family: Arial, sans-serif;
+            user-select: none; /* Prevent text selection */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .form-container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            animation: fadeIn 0.5s ease-out;
+        }
+        .form-container h1 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .form-container input {
+            width: 80%;
+            padding: 10px;
+            font-size: 16px;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        .form-container input:focus {
+            border-color: #ff69b4;
+        }
+        .form-container button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background: linear-gradient(135deg, #ff69b4, #ff1493);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+        }
+        .form-container button:hover {
+            background: linear-gradient(135deg, #ff1493, #ff69b4);
+            transform: scale(1.1);
+        }
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(-20px); }
+            100% { opacity: 1; transform: translateY(0); }
         }
         .container {
             position: relative;
             display: inline-block;
             margin-top: 50px;
+            display: none; /* Hidden until form is submitted */
+        }
+        .pet-title {
+            font-size: 40px;
+            background: linear-gradient(90deg, #ff69b4, #ff1493, #ff69b4);
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: glowText 2s infinite;
+            margin-bottom: 20px;
+        }
+        @keyframes glowText {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
         .penguin {
             width: 150px;
@@ -100,6 +178,7 @@
             cursor: pointer;
             transition: background 0.3s, transform 0.2s;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin: 5px;
         }
         .store button:hover {
             background: linear-gradient(135deg, #e03e00, #cc3700);
@@ -129,112 +208,235 @@
         }
         .heart {
             position: absolute;
-            color: red;
-            font-size: 20px;
-            animation: floatUp 1s ease-out;
+            width: 20px;
+            height: 20px;
+            background-color: red;
+            transform: rotate(-45deg);
+            animation: floatUp 1.5s ease-out forwards;
         }
-        h1 {
+        .heart::before,
+        .heart::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: red;
+            border-radius: 50%;
+        }
+        .heart::before {
+            top: -10px;
+            left: 0;
+        }
+        .heart::after {
+            top: 0;
+            left: 10px;
+        }
+        .love-message {
+            position: absolute;
+            color: pink;
+            font-size: 30px;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            animation: glow 1.5s infinite, floatUp 2s ease-out forwards;
+            pointer-events: none; /* Make it unclickable */
+        }
+        .special-message {
+            position: absolute;
+            color: #ff69b4;
             font-size: 40px;
-            background: linear-gradient(90deg, #ff6347, #ffa500);
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 20px;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            animation: glow 1.5s infinite, floatUp 2s ease-out forwards;
+            pointer-events: none; /* Make it unclickable */
+        }
+        .feed-message {
+            position: absolute;
+            color: #ff69b4;
+            font-size: 30px;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            animation: glow 1.5s infinite, floatUp 2s ease-out forwards;
+            pointer-events: none; /* Make it unclickable */
         }
         @keyframes floatUp {
             0% { transform: translateY(0) scale(1); opacity: 1; }
-            100% { transform: translateY(-50px) scale(1.5); opacity: 0; }
+            100% { transform: translateY(-100px) scale(1.5); opacity: 0; }
+        }
+        @keyframes glow {
+            0% { text-shadow: 0 0 5px #ff69b4, 0 0 10px #ff69b4, 0 0 20px #ff69b4; }
+            50% { text-shadow: 0 0 10px #ff69b4, 0 0 20px #ff69b4, 0 0 30px #ff69b4; }
+            100% { text-shadow: 0 0 5px #ff69b4, 0 0 10px #ff69b4, 0 0 20px #ff69b4; }
         }
     </style>
 </head>
 <body>
-    <h1>AAPKA NEW PET</h1>
-    <div class="container" id="penguin" onclick="petPenguin()" ondrop="drop(event)" ondragover="allowDrop(event)">
-        <div class="penguin">
-            <div class="penguin-belly"></div>
-            <div class="penguin-eye eye-left"></div>
-            <div class="penguin-eye eye-right"></div>
-            <div class="penguin-beak"></div>
+    <div class="overlay" id="overlay">
+        <div class="form-container">
+            <h1>Name Your Pet</h1>
+            <input type="text" id="pet-name" placeholder="Enter your pet's name" maxlength="20">
+            <button onclick="submitName()">Submit</button>
         </div>
     </div>
-    <div class="attraction-container">
-        <div class="attraction-bar" id="attraction-bar"></div>
-        <span id="attraction-text">0 / 10</span>
+    <div class="container" id="container">
+        <h1 class="pet-title" id="pet-title">AAPKA NEW PET</h1>
+        <div id="penguin" onclick="petPenguin()" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <div class="penguin">
+                <div class="penguin-belly"></div>
+                <div class="penguin-eye eye-left"></div>
+                <div class="penguin-eye eye-right"></div>
+                <div class="penguin-beak"></div>
+            </div>
+        </div>
+        <div class="attraction-container">
+            <div class="attraction-bar" id="attraction-bar"></div>
+            <span id="attraction-text">0 / 10</span>
+        </div>
+        <p class="level">Level: <span id="level">1</span></p>
+        <p class="currency">Money: $<span id="coins">0</span></p>
+        <div class="store">
+            <button onclick="buyFood('🍎', 5)">Buy Apple ($5)</button>
+            <button onclick="buyFood('🍕', 10)">Buy Pizza ($10)</button>
+            <button onclick="buyFood('🍰', 20)">Buy Cake ($20)</button>
+        </div>
+        <div class="inventory" id="inventory"></div>
     </div>
-    <p class="level">Level: <span id="level">1</span></p>
-    <p class="currency">Money: $<span id="coins">0</span></p>
-    <div class="store">
-        <button onclick="buyFood()">Buy Food ($5)</button>
-    </div>
-    <div class="inventory" id="inventory"></div>
     <script>
         let attraction = 0;
         let level = 1;
         let coins = 0;
+        let petName = "AAPKA NEW PET";
+
         const levelUpThreshold = () => level * 10;
-        
-        function petPenguin() {
-            attraction++;
-            coins++;
-            if (attraction >= levelUpThreshold()) {
-                attraction = 0;
-                level++;
-                document.getElementById("level").textContent = level;
-            }
+
+        function updateStats() {
             document.getElementById("attraction-bar").style.width = (attraction / levelUpThreshold() * 100) + "%";
             document.getElementById("attraction-text").textContent = `${attraction} / ${levelUpThreshold()}`;
             document.getElementById("coins").textContent = coins;
-            createHeart();
+            document.getElementById("level").textContent = level;
         }
 
-        function createHeart() {
-            let heart = document.createElement("div");
-            heart.classList.add("heart");
-            heart.textContent = "❤️";
-            heart.style.left = `${Math.random() * 100}%`;
-            heart.style.top = "50%";
-            document.body.appendChild(heart);
-            setTimeout(() => heart.remove(), 1000);
+        function submitName() {
+            const nameInput = document.getElementById("pet-name");
+            petName = nameInput.value.trim() || "AAPKA NEW PET"; // Default name if empty
+            document.getElementById("pet-title").textContent = petName;
+            document.title = `Virtual Pet - ${petName}`; // Update page title
+            document.getElementById("overlay").style.display = "none"; // Hide the form
+            document.getElementById("container").style.display = "block"; // Show the main content
         }
-        
+
+        function checkLevelUp() {
+            if (attraction >= levelUpThreshold()) {
+                attraction = 0; // Reset attraction
+                level++; // Increase level
+                if (level !== 5) {
+                    createLoveMessage();
+                } else {
+                    createSpecialMessage();
+                }
+                updateStats(); // Update stats after leveling up
+            }
+        }
+
+        function petPenguin() {
+            attraction++;
+            coins++;
+            checkLevelUp(); // Check if level-up is needed
+            updateStats();
+            createHearts(3); // Create 3 hearts when petted
+        }
+
+        function createHearts(count) {
+            for (let i = 0; i < count; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement("div");
+                    heart.classList.add("heart");
+                    heart.style.left = `${Math.random() * 80 + 10}%`; // Random horizontal position
+                    heart.style.top = "60%"; // Start from the penguin's position
+                    document.body.appendChild(heart);
+                    setTimeout(() => heart.remove(), 1500); // Remove after animation
+                }, i * 200); // Staggered appearance
+            }
+        }
+
+        function createLoveMessage() {
+            const message = document.createElement("div");
+            message.classList.add("love-message");
+            message.textContent = "Love you Mommy!";
+            message.style.left = "50%";
+            message.style.top = "40%";
+            document.body.appendChild(message);
+
+            // Remove the message after 3 seconds
+            setTimeout(() => message.remove(), 3000);
+        }
+
+        function createSpecialMessage() {
+            const specialMessage = document.createElement("div");
+            specialMessage.classList.add("special-message");
+            specialMessage.textContent = "Daddy says he loves you!";
+            specialMessage.style.left = "50%";
+            specialMessage.style.top = "30%";
+            document.body.appendChild(specialMessage);
+
+            // Add more hearts popping out of the message
+            createHearts(10); // Create 10 hearts for level 5
+
+            // Remove the message after 5 seconds
+            setTimeout(() => specialMessage.remove(), 5000);
+        }
+
+        function createFeedMessage() {
+            const messages = ["Gomp Gomp!", "Chomp Chomp!", "Thank you!!", "Glub Glub", "😋"];
+            const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+
+            const feedMessage = document.createElement("div");
+            feedMessage.classList.add("feed-message");
+            feedMessage.textContent = randomMessage;
+            feedMessage.style.left = "50%";
+            feedMessage.style.top = "40%";
+            document.body.appendChild(feedMessage);
+
+            // Remove the message after 3 seconds
+            setTimeout(() => feedMessage.remove(), 3000);
+        }
+
         function allowDrop(event) {
             event.preventDefault();
         }
-        
+
         function drag(event) {
             event.dataTransfer.setData("text", event.target.id);
         }
-        
+
         function drop(event) {
             event.preventDefault();
-            let data = event.dataTransfer.getData("text");
-            let foodItem = document.getElementById(data);
+            const foodId = event.dataTransfer.getData("text");
+            const foodItem = document.getElementById(foodId);
             if (foodItem) {
                 foodItem.remove();
-                attraction += 3;
-                document.getElementById("attraction-bar").style.width = (attraction / levelUpThreshold() * 100) + "%";
-                document.getElementById("attraction-text").textContent = `${attraction} / ${levelUpThreshold()}`;
+                attraction += 3; // Increase attraction when fed
+                coins++; // Increase coins when fed
+                checkLevelUp(); // Check if level-up is needed
+                updateStats();
+                createHearts(3); // Create 3 hearts when fed
+                createFeedMessage(); // Show random feed message
             }
         }
-        
-        function buyFood() {
-            if (coins >= 5) {
-                coins -= 5;
-                document.getElementById("coins").textContent = coins;
-                let food = document.createElement("div");
+
+        function buyFood(foodEmoji, price) {
+            if (coins >= price) {
+                coins -= price;
+                const food = document.createElement("div");
                 food.classList.add("food-item");
-                food.textContent = "🍎";
-                food.id = "food-" + Math.random().toString(36).substr(2, 9);
+                food.textContent = foodEmoji;
+                food.id = `food-${Math.random().toString(36).substr(2, 9)}`;
                 food.draggable = true;
                 food.ondragstart = drag;
                 document.getElementById("inventory").appendChild(food);
                 updateStats();
+            } else {
+                alert("Not enough coins!");
             }
-        }
-            function updateStats() {
-            document.getElementById("attractionBar").style.width = (attraction / attractionGoal * 100) + "%";
-            document.getElementById("attractionValue").innerText = attraction;
-            document.getElementById("money").innerText = money;
-            document.getElementById("level").innerText = level;
         }
     </script>
 </body>

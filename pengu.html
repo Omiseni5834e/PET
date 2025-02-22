@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Virtual Pet - Monarch Penguin</title>
+    <style>
+        body {
+            text-align: center;
+            background-color: #ffefd5;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            position: relative;
+            display: inline-block;
+            margin-top: 50px;
+        }
+        .penguin {
+            width: 150px;
+            height: 200px;
+            position: relative;
+            background: black;
+            border-radius: 50% 50% 40% 40%;
+            margin: auto;
+            cursor: pointer;
+            transition: transform 0.1s;
+        }
+        .penguin:hover {
+            transform: scale(1.05);
+        }
+        .penguin-belly {
+            width: 80px;
+            height: 120px;
+            background: white;
+            border-radius: 50%;
+            position: absolute;
+            top: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .penguin-eye {
+            width: 15px;
+            height: 15px;
+            background: white;
+            border-radius: 50%;
+            position: absolute;
+            top: 30px;
+        }
+        .eye-left { left: 40px; }
+        .eye-right { right: 40px; }
+        .penguin-beak {
+            width: 20px;
+            height: 15px;
+            background: orange;
+            position: absolute;
+            top: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 50%;
+        }
+        .attraction-container {
+            width: 200px;
+            height: 20px;
+            background: #ddd;
+            border-radius: 10px;
+            margin: 20px auto;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+            color: white;
+            font-weight: bold;
+            line-height: 20px;
+        }
+        .attraction-bar {
+            width: 0%;
+            height: 100%;
+            background: green;
+            transition: width 0.3s;
+        }
+        .level, .currency {
+            font-size: 20px;
+            margin-top: 10px;
+            padding: 10px;
+            background: linear-gradient(135deg, #4CAF50, #2E8B57);
+            color: white;
+            border-radius: 12px;
+            display: inline-block;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .store {
+            margin-top: 20px;
+        }
+        .store button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background: linear-gradient(135deg, #ff6347, #ff4500);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .store button:hover {
+            background: linear-gradient(135deg, #e03e00, #cc3700);
+            transform: scale(1.1);
+        }
+        .inventory {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+            padding: 10px;
+            background: #ccc;
+            border: 2px solid #888;
+            width: 300px;
+            min-height: 50px;
+            flex-wrap: wrap;
+        }
+        .food-item {
+            width: 40px;
+            height: 40px;
+            margin: 5px;
+            cursor: grab;
+            background: lightgreen;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .heart {
+            position: absolute;
+            color: red;
+            font-size: 20px;
+            animation: floatUp 1s ease-out;
+        }
+        h1 {
+            font-size: 40px;
+            background: linear-gradient(90deg, #ff6347, #ffa500);
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(0) scale(1); opacity: 1; }
+            100% { transform: translateY(-50px) scale(1.5); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <h1>AAPKA NEW PET</h1>
+    <div class="container" id="penguin" onclick="petPenguin()" ondrop="drop(event)" ondragover="allowDrop(event)">
+        <div class="penguin">
+            <div class="penguin-belly"></div>
+            <div class="penguin-eye eye-left"></div>
+            <div class="penguin-eye eye-right"></div>
+            <div class="penguin-beak"></div>
+        </div>
+    </div>
+    <div class="attraction-container">
+        <div class="attraction-bar" id="attraction-bar"></div>
+        <span id="attraction-text">0 / 10</span>
+    </div>
+    <p class="level">Level: <span id="level">1</span></p>
+    <p class="currency">Money: $<span id="coins">0</span></p>
+    <div class="store">
+        <button onclick="buyFood()">Buy Food ($5)</button>
+    </div>
+    <div class="inventory" id="inventory"></div>
+    <script>
+        let attraction = 0;
+        let level = 1;
+        let coins = 0;
+        const levelUpThreshold = () => level * 10;
+        
+        function petPenguin() {
+            attraction++;
+            coins++;
+            if (attraction >= levelUpThreshold()) {
+                attraction = 0;
+                level++;
+                document.getElementById("level").textContent = level;
+            }
+            document.getElementById("attraction-bar").style.width = (attraction / levelUpThreshold() * 100) + "%";
+            document.getElementById("attraction-text").textContent = `${attraction} / ${levelUpThreshold()}`;
+            document.getElementById("coins").textContent = coins;
+            createHeart();
+        }
+
+        function createHeart() {
+            let heart = document.createElement("div");
+            heart.classList.add("heart");
+            heart.textContent = "❤️";
+            heart.style.left = `${Math.random() * 100}%`;
+            heart.style.top = "50%";
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 1000);
+        }
+        
+        function allowDrop(event) {
+            event.preventDefault();
+        }
+        
+        function drag(event) {
+            event.dataTransfer.setData("text", event.target.id);
+        }
+        
+        function drop(event) {
+            event.preventDefault();
+            let data = event.dataTransfer.getData("text");
+            let foodItem = document.getElementById(data);
+            if (foodItem) {
+                foodItem.remove();
+                attraction += 3;
+                document.getElementById("attraction-bar").style.width = (attraction / levelUpThreshold() * 100) + "%";
+                document.getElementById("attraction-text").textContent = `${attraction} / ${levelUpThreshold()}`;
+            }
+        }
+        
+        function buyFood() {
+            if (coins >= 5) {
+                coins -= 5;
+                document.getElementById("coins").textContent = coins;
+                let food = document.createElement("div");
+                food.classList.add("food-item");
+                food.textContent = "🍎";
+                food.id = "food-" + Math.random().toString(36).substr(2, 9);
+                food.draggable = true;
+                food.ondragstart = drag;
+                document.getElementById("inventory").appendChild(food);
+                updateStats();
+            }
+        }
+            function updateStats() {
+            document.getElementById("attractionBar").style.width = (attraction / attractionGoal * 100) + "%";
+            document.getElementById("attractionValue").innerText = attraction;
+            document.getElementById("money").innerText = money;
+            document.getElementById("level").innerText = level;
+        }
+    </script>
+</body>
+</html>
